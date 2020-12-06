@@ -83,8 +83,8 @@ class MetodosOrdenamiento{
 			
 			tiempo = tFin-tInicio;
 			System.out.print("Intercalación:	");
-			System.out.print(tiempo + "        ");
-			System.out.print(recorridos + "    ");
+			System.out.print(tiempo + "       ");
+			System.out.print(recorridos + "      ");
 			System.out.print(comparaciones + "     ");
 			System.out.println(intercambios);
 		}
@@ -165,8 +165,8 @@ class MetodosOrdenamiento{
 			tFin = System.nanoTime();
 			
 			tiempo = tFin-tInicio;
-			System.out.print("Intercalación:	");
-			System.out.print(tiempo + "        ");
+			System.out.print("Mezcla directa:	");
+			System.out.print(tiempo + "     ");
 			System.out.print(recorridos + "    ");
 			System.out.print(comparaciones + "     ");
 			System.out.println(intercambios);
@@ -318,8 +318,8 @@ class MetodosOrdenamiento{
 			tFin = System.nanoTime();
 			
 			tiempo = tFin-tInicio;
-			System.out.print("Intercalación:	");
-			System.out.print(tiempo + "        ");
+			System.out.print("Mezcla natural:	");
+			System.out.print(tiempo + "     ");
 			System.out.print(recorridos + "    ");
 			System.out.print(comparaciones + "     ");
 			System.out.println(intercambios);
@@ -334,7 +334,7 @@ class LlamadaMetodos{
 	public static void llamar(int []n) {
 		
 		MetodosOrdenamiento.Intercalacion.ordenar(n);
-		MetodosOrdenamiento.MezclaDirecta.ordenar(n);
+		MetodosOrdenamiento.MezclaDirecta.llamadaOrdenamientoMezclaDirecto(n);
 		MetodosOrdenamiento.MezclaNatural.mezclaNatural(n);
 		
 	}
@@ -345,6 +345,18 @@ class LlamadaMetodos{
 public class PruebasEstres {
 
 	public static void main(String[] args) {
+		
+		System.out.println("----------------------1000 números----------------------");
+		System.out.println("Método          Tiempo     Rec     Comp      Int");
+		LlamadaMetodos.llamar(NumerosAleatorios.generarNumeros(1000));
+		System.out.println();
+		System.out.println("----------------------10000 números---------------------");
+		System.out.println("Método          Tiempo       Rec      Comp      Int");
+		LlamadaMetodos.llamar(NumerosAleatorios.generarNumeros(10000));
+		System.out.println();
+		System.out.println("----------------------100000 números--------------------");
+		System.out.println("Método          Tiempo         Rec      Comp        Int");
+		LlamadaMetodos.llamar(NumerosAleatorios.generarNumeros(100000));
 	
 
 	}
