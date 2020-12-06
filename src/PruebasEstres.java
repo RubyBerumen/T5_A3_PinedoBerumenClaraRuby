@@ -16,42 +16,67 @@ class MetodosOrdenamiento{
 		
 		static long tInicio, tFin;
 		static long  recorridos = 0, comparaciones = 0, intercambios = 0, tiempo = 0;
-		public static void ordenar(int[]nums, int primero[], int segundo[]){
-			int numeros [] = nums.clone();
+		public static void complementoIntercalacion(int numeros[]){
+			int aux;
+			for (int i = 1; i < numeros.length; i++) {
+				aux=numeros[i];
+				for (int j=i-1; j>=0 && numeros[j]>aux ; j--) {
+					numeros[j+1]=numeros[j];
+					numeros[j]=aux;
+				}
+			}
+		}
+		
+		public static void ordenar(int nums[]) {
+			tInicio=System.nanoTime();
+			int numeros[]=nums.clone();
+			long comparaciones=0,intercambios=0,recorridos=0;
 			
-			int arrayOrdenado[] = new int[primero.length+segundo.length];
-			tInicio = System.nanoTime();
-			int i=0, j=0, k=0;
+			int[] arregloA,arregloB;
+			
+			if (numeros.length%2==0) {
+				arregloA=new int[numeros.length/2];
+				arregloB=new int[numeros.length/2];
+			}else {
+				arregloA=new int[numeros.length/2];
+				arregloB=new int[(numeros.length/2)+1];
+			}
+			for (int i = 0; i < numeros.length; i++) {
+				if (i<numeros.length/2) {
+					arregloA[i]=numeros[i];
+				}else {
+					arregloB[i-arregloA.length]=numeros[i];
+				}
+			}
+			complementoIntercalacion(arregloA);
+			complementoIntercalacion(arregloB);
+			
+			long ini = System.nanoTime();
+			
+			int arregloC[] = new int[arregloA.length+arregloB.length];
+			
+			int i,k,j;
 			recorridos+=1;
-			while(i<primero.length && j<segundo.length) {
+			for(i=j=k=0; i<arregloA.length && j<arregloB.length; k++){
 				comparaciones+=1;
-				if(primero[i]<segundo[j]) {
-					comparaciones+=1;
-					arrayOrdenado[k] = primero[i];
-					k++;
+				intercambios+=1;
+				if(arregloA[i]<arregloB[j]) {
+					arregloC[k] = arregloA[i];
 					i++;
 				}else {
-					arrayOrdenado[k] = segundo[j];
+					arregloC[k] = arregloB[j];
 					j++;
-					k++;
-					
 				}
 			}
 			recorridos+=1;
-			while(j<segundo.length) {
-				comparaciones+=1;
-				arrayOrdenado[k] = segundo[j];
+			for(;i<arregloA.length; i++,k++) {
+				arregloC[k] = arregloA[i];
 				intercambios+=1;
-				j++;
-				k++;
 			}
 			recorridos+=1;
-			while(i<primero.length) {
-				comparaciones+=1;
-				arrayOrdenado[k] = segundo[i];
+			for(;j<arregloB.length; j++,k++) {
+				arregloC[k] = arregloB[j];
 				intercambios+=1;
-				i++;
-				k++;
 			}
 			tFin = System.nanoTime();
 			
@@ -301,11 +326,21 @@ class MetodosOrdenamiento{
 			
 		}	
 	}
-
-	
 	
 	
 }//metodos ordenamiento
+
+class LlamadaMetodos{
+	public static void llamar(int []n) {
+		
+		MetodosOrdenamiento.Intercalacion.ordenar(n);
+		MetodosOrdenamiento.MezclaDirecta.ordenar(n);
+		MetodosOrdenamiento.MezclaNatural.mezclaNatural(n);
+		
+	}
+}
+
+
 
 public class PruebasEstres {
 
