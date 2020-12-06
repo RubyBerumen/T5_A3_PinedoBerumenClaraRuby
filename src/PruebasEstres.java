@@ -1,4 +1,15 @@
 
+class NumerosAleatorios{
+	
+	public static int[] generarNumeros(int cantidad){
+		int[] nums = new int[cantidad];
+		for (int i = 0; i < nums.length; i++) {
+			nums[i]=(int)(Math.random()*cantidad);
+		}
+	    return nums;
+	}
+}
+
 class MetodosOrdenamiento{
 	
 	static class Intercalacion{
