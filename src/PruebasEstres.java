@@ -152,6 +152,10 @@ class MetodosOrdenamiento{
 	
 	
 	static class MezclaNatural{
+		
+		static long tInicio, tFin;
+		static long  recorridos = 0, comparaciones = 0, intercambios = 0, tiempo = 0;
+		
 		public static int[] mezclaDirecta (int[] vector) {
 			int i,j,k;
 			if(vector.length>1) {
@@ -159,12 +163,14 @@ class MetodosOrdenamiento{
 				int nElementosDerecha = vector.length - nElementosIzquierda;
 				int vectorI[] = new int [nElementosIzquierda];
 				int vectorD[] = new int [nElementosDerecha];
-				
+				recorridos+=1;
 				for (i = 0; i < nElementosIzquierda; i++) {
+					intercambios+=1;
 					vectorI[i]=vector[i];
 				}
-				
+				recorridos+=1;
 				for (i = nElementosIzquierda; i < nElementosIzquierda+nElementosDerecha; i++){
+					intercambios+=1;
 					vectorD[i-nElementosIzquierda] = vector[i];
 				}
 				vectorI = mezclaDirecta(vectorI);
@@ -172,7 +178,10 @@ class MetodosOrdenamiento{
 				i=0;
 				j=0;
 				k=0;
+				recorridos+=1;
 				while(vectorI.length!=j && vectorD.length!=k) {
+					comparaciones+=1;
+					intercambios+=1;
 					if(vectorI[j]<vectorD[k]) {
 						vector[i]=vectorI[j];
 						i++;
@@ -183,12 +192,16 @@ class MetodosOrdenamiento{
 						k++;
 					}//Else
 				}//While	
+				recorridos+=1;
 				while(vectorI.length!=j) {
+					intercambios+=1;
 					vector[i] = vectorI[j];
 					i++;
 					j++;
 				}
+				recorridos+=1;
 				while(vectorD.length!=k) {
+					intercambios+=1;
 					vector[i] = vectorD[k];
 					i++;
 					k++;
@@ -204,12 +217,13 @@ class MetodosOrdenamiento{
 				int nElementosDerecha = vector.length - nElementosIzquierda;
 				int vectorI[] = new int [nElementosIzquierda];
 				int vectorD[] = new int [nElementosDerecha];
-				
+				recorridos+=1;
 				for (i = 0; i < nElementosIzquierda; i++) {
 					vectorI[i]=vector[i];
 				}
-				
+				recorridos+=1;
 				for (i = nElementosIzquierda; i < nElementosIzquierda+nElementosDerecha; i++){
+					intercambios+=1;
 					vectorD[i-nElementosIzquierda] = vector[i];
 				}
 				vectorI = mezclaDirecta(vectorI);
@@ -217,7 +231,9 @@ class MetodosOrdenamiento{
 				i=0;
 				j=0;
 				k=0;
+				recorridos+=1;
 				while(vectorI.length!=j && vectorD.length!=k) {
+					comparaciones+=1;
 					if(vectorI[j]<vectorD[k]) {
 						vector[i]=vectorI[j];
 						i++;
@@ -228,12 +244,13 @@ class MetodosOrdenamiento{
 						k++;
 					}//Else
 				}//While
-					
+				recorridos+=1;	
 				while(vectorI.length!=j) {
 					vector[i] = vectorI[j];
 					i++;
 					j++;
 				}
+				recorridos+=1;
 				while(vectorD.length!=k) {
 					vector[i] = vectorD[k];
 					i++;
@@ -245,21 +262,25 @@ class MetodosOrdenamiento{
 		public static void mezclaNatural(int[] numeros) {
 			int izquierda =0;
 			int izq =0;
-			int derecha = numeros.length-1;//Sin el error de nullPointerExepcion
+			int derecha = numeros.length-1;
 			int der = derecha;
 			boolean ordenado = false;
+			tInicio = System.nanoTime();
 			do {
 				ordenado = true;
 				izquierda = 0;
 				while(izquierda<derecha) {
 					izq =izquierda;
+					recorridos+=1;
 					while(izq < derecha && numeros[izq]<=numeros[izq+1]) {
 						izq++;
 					}
 					der = izq +1;
+					recorridos+=1;
 					while(der==derecha-1 || der<derecha && numeros[der]<=numeros[der+1]) {
 						der++;
 					}
+					comparaciones+=1;
 					if(der<=derecha) {
 						mezclaDirecta2(numeros);
 						
@@ -269,6 +290,15 @@ class MetodosOrdenamiento{
 					
 				}
 			}while(!ordenado);	
+			tFin = System.nanoTime();
+			
+			tiempo = tFin-tInicio;
+			System.out.print("Intercalación:	");
+			System.out.print(tiempo + "        ");
+			System.out.print(recorridos + "    ");
+			System.out.print(comparaciones + "     ");
+			System.out.println(intercambios);
+			
 		}	
 	}
 
