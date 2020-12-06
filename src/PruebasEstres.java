@@ -3,15 +3,19 @@ class MetodosOrdenamiento{
 	
 	static class Intercalacion{
 		
-		
-		public static int []ordenar(int primero[], int segundo[]){
+		static long tInicio, tFin;
+		static long  recorridos = 0, comparaciones = 0, intercambios = 0, tiempo = 0;
+		public static void ordenar(int[]nums, int primero[], int segundo[]){
+			int numeros [] = nums.clone();
 			
 			int arrayOrdenado[] = new int[primero.length+segundo.length];
-			
+			tInicio = System.nanoTime();
 			int i=0, j=0, k=0;
-			
+			recorridos+=1;
 			while(i<primero.length && j<segundo.length) {
+				comparaciones+=1;
 				if(primero[i]<segundo[j]) {
+					comparaciones+=1;
 					arrayOrdenado[k] = primero[i];
 					k++;
 					i++;
@@ -22,20 +26,33 @@ class MetodosOrdenamiento{
 					
 				}
 			}
+			recorridos+=1;
 			while(j<segundo.length) {
+				comparaciones+=1;
 				arrayOrdenado[k] = segundo[j];
 				j++;
 				k++;
 			}
+			recorridos+=1;
 			while(i<primero.length) {
+				comparaciones+=1;
 				arrayOrdenado[k] = segundo[i];
 				i++;
 				k++;
 			}
+			tFin = System.nanoTime();
 			
-			return arrayOrdenado;
 			
+			tiempo = tFin-tInicio;
+			System.out.print("Intercalación:	");
+			System.out.print(tiempo + "        ");
+			System.out.print(recorridos + "    ");
+			System.out.print(comparaciones + "     ");
+			System.out.println(intercambios);
 		}
+		
+
+		
 	}
 	
 	
