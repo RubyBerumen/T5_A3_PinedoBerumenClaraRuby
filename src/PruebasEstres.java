@@ -41,6 +41,7 @@ class MetodosOrdenamiento{
 			while(j<segundo.length) {
 				comparaciones+=1;
 				arrayOrdenado[k] = segundo[j];
+				intercambios+=1;
 				j++;
 				k++;
 			}
@@ -48,6 +49,7 @@ class MetodosOrdenamiento{
 			while(i<primero.length) {
 				comparaciones+=1;
 				arrayOrdenado[k] = segundo[i];
+				intercambios+=1;
 				i++;
 				k++;
 			}
@@ -70,6 +72,9 @@ class MetodosOrdenamiento{
 	
 	static class MezclaDirecta{
 		
+		static long tInicio, tFin;
+		static long  recorridos = 0, comparaciones = 0, intercambios = 0, tiempo = 0;
+		
 		public static int[] ordenar(int numeros[]) {
 			int i,j,k;
 			if(numeros.length>1) {
@@ -78,20 +83,24 @@ class MetodosOrdenamiento{
 				
 				int arregloIzquierdo[] = new int[numElementosIzq];
 				int arregloDerecho[] = new int[numElementosDer];
-				
+				recorridos+=1;
 				for (i=0; i<numElementosIzq; i++) {
 					arregloIzquierdo[i] = numeros[i];
+					intercambios+=1;
 				}
-				
+				recorridos+=1;
 				for (i=numElementosIzq; i<numElementosIzq+numElementosDer; i++) {
 					arregloDerecho[i-numElementosIzq]=numeros[i];
+					intercambios+=1;
 				}
 				
 				arregloIzquierdo = ordenar(arregloIzquierdo);
 				arregloDerecho = ordenar(arregloDerecho);
 				i=j=k=0;
-				
+				recorridos+=1;
 				while(arregloIzquierdo.length!=j && arregloDerecho.length!=k) {
+					comparaciones+=1;
+					intercambios+=1;
 					if(arregloIzquierdo[j]<arregloDerecho[k]) {
 						numeros[i] = arregloIzquierdo[j];
 						i++;
@@ -104,20 +113,40 @@ class MetodosOrdenamiento{
 					}
 
 				}
-				
+				recorridos+=1;
 				while(arregloIzquierdo.length!=j) {
 					numeros[i]=arregloIzquierdo[j];
+					intercambios+=1;
 					i++;
 					j++;
 				}
+				recorridos+=1;
 				while(arregloDerecho.length!=k) {
 					numeros[i]=arregloDerecho[k];
+					intercambios+=1;
 					i++;
 					k++;
 				}
 			}
 			return numeros;
 		}
+		
+		
+		public static void llamadaOrdenamientoMezclaDirecto(int nums[]) {
+			int numeros[]=nums.clone();
+			
+			tInicio = System.nanoTime();
+			ordenar(numeros);
+			tFin = System.nanoTime();
+			
+			tiempo = tFin-tInicio;
+			System.out.print("Intercalación:	");
+			System.out.print(tiempo + "        ");
+			System.out.print(recorridos + "    ");
+			System.out.print(comparaciones + "     ");
+			System.out.println(intercambios);
+		}
+		
 	}
 	
 	
